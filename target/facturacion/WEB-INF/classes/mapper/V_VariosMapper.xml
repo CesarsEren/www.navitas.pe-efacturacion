@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.alo.digital.transportes.webapp.efact.mapper.V_VariosMapper">
+
+	<select id="getVarios"  resultType="Map"  statementType="CALLABLE">
+				EXECUTE	USP_GET_VARIOS
+	</select> 
+	
+</mapper>

@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{fragments/layout}">
+<head>
+</head>
+<body>
+	<div layout:fragment="content" th:remove="tag">
+		<div class="row">
+			<div class="col-md-12 col-sm-12 col-xs-12">
+				<div class="page-title">
+		            	<h2>MANTENIMIENTO DE USUARIOS</h2>
+		        </div>
+			</div>
+		</div>
+		<div class="row">
+		   <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel" >
+                  <div class="x_content">
+                      <div class="row">
+							<div class="row">
+								
+								<div class="col-md-6 col-sm-4 col-xs-12">
+									<label>Nombres</label>
+									<input id="nombres" type="text"  class="form-control" name="usuario.nombres" maxlength="50" style="text-transform: uppercase;"/>
+								</div>
+								<!--
+								<div class="col-md-3 col-sm-4 col-xs-12">
+									<label>Apellido Materno</label>
+									<input id="apellidoMaterno" type="text" class="form-control"  maxlength="100" name="usuario.apellidoMaterno" style="text-transform: uppercase;"/>
+								</div>
+								
+								<div class="col-md-3 col-sm-4 col-xs-12">
+									<label>Apellido Paterno</label>
+									<input id="apellidoPaterno" type="text" class="form-control"  maxlength="100" name="usuario.apellidoPaterno" style="text-transform: uppercase;"/>
+								</div>
+								-->
+							</div>
+							<div class="row">
+								<div class="col-md-2 col-sm-4 col-xs-12">
+									<label>Ruc</label>
+									<input id="ruc" type="text"  class="form-control" name="usuario.ruc" maxlength="11" style="text-transform: uppercase;" onblur="javascript:RucExistente(this);"/>
+								</div>
+								<div class="col-md-4 col-sm-4 col-xs-12">
+									<label>Razon</label>
+									<input id="razonSocial" type="text" class="form-control"  maxlength="100" name="usuario.razonSocial" disabled="disabled"/>
+								</div>
+								
+							</div>
+							<div class="row">
+								<!--
+								<div class="col-md-3 col-sm-4 col-xs-12">
+									<label>Usuario</label>
+									<input id="username" type="text" class="form-control"  maxlength="6" name="usuario.username"/>
+								</div>
+								-->
+								<div class="col-md-2 col-sm-4 col-xs-12">
+									<label>Nivel</label>
+									<select class="form-control" id="nivel" name="usuario.nivel">
+										<option value="2">USUARIO</option>
+										<option value="1">ADMINISTRADOR</option>
+									</select>
+								</div>
+								<div class="col-md-4 col-sm-4 col-xs-12">
+									<label>Clave</label>
+									<input id="password" type="text" class="form-control"  maxlength="8" name="usuario.password"/>
+								</div>
+								<div class="col-md-1 col-sm-2 col-xs-3" style="padding-top: 23px">
+										<input id="btnRegistrarUsuarios" type="button" class="btn btn-primary" value="REGISTRAR" disabled="disabled">
+								</div>
+							</div>
+							<div class="row" id="divMensaje" style="display: none;padding-bottom: 20px;">
+								<div class ="col-md-6 col-sm-6 col-xs-12">
+									<div class="alert alert-info" role="alert" id="mensaje">
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-9 col-sm-12 col-xs-12">
+										<table  class="table table-condensed table-sm"
+											   	data-toggle="table"
+											   	data-locale="es-ES"
+											  	data-pagination="true"
+											   	data-height="350"
+											  	data-unique-id="id"
+											  	data-url="/envialoconsultas/usuarios/listar"
+											   	data-side-pagination="server"
+											   	data-response-handler="responseHandler"
+								  			  	
+								  			  	id="tblUsuarios">
+				                      		<thead>
+				                      			<tr>
+				                      			  <th data-field="id" data-visible="false">Id</th>
+				                      			  <th data-field="nombres">Nombres</th>
+				                      			  <th data-field="apellidos">Apellidos</th>
+				                  				  <th data-field="ruc">Ruc</th>
+				                  				  <th data-field="razon">Razon</th>
+				                           		  <th data-field="usuario">Usuario</th>
+				                           		  <th data-field="estado" data-formatter="estadoUsuario">Estado</th>
+				                           		  <th data-field="observaciones" data-formatter="FormatterUsuario" data-events="operateEvents">Operaciones</th>
+				                           		</tr>
+				                      		</thead>
+				               		 </table>
+					            </div>
+							</div>
+							<div class="row" >
+									<div class="modal fade bs-example-modal-lg" id="modalUsuario" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+										  <div class="modal-dialog modal-lg" role="document">
+										    <div class="modal-content">
+										     		<div class="modal-content">
+													<div class="modal-header">
+														<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+														<h4 class="modal-title" id="modalLabelPaso2">Actualizar el Usuario</h4>
+													</div>
+													<div class="modal-body">
+														<div class="row">
+															<div class="row">
+																<div class="col-md-3 col-sm-4 col-xs-12">
+																	<label>Nombres</label>
+																	<input id="nombresupdate" type="text"  class="form-control" name="nombresupdate" maxlength="100" style="text-transform: uppercase;"/>
+																</div>
+																<!--
+																<div class="col-md-3 col-sm-4 col-xs-12">
+																	<label>Apellido Materno</label>
+																	<input id="apellidoMaternoupdate" type="text" class="form-control"  maxlength="100" name="apellidoMaternoupdate" style="text-transform: uppercase;"/>
+																</div>
+																<div class="col-md-3 col-sm-4 col-xs-12">
+																	<label>Apellido Paterno</label>
+																	<input id="apellidoPaternoupdate" type="text" class="form-control"  maxlength="100" name="apellidoPaternoupdate" style="text-transform: uppercase;"/>
+																</div>-->
+															</div>
+															<div class="row" style="padding-bottom: 15px;">
+																<div class="col-md-3 col-sm-4 col-xs-12">
+																	<label>Estado</label>
+																	<select class="form-control" id="estadoupdate" name="estadoupdate">
+																		<option value="Y">ACTIVO</option>
+																		<option value="N">INACTIVO</option>
+																	</select>
+																</div>
+																<div class="col-md-3 col-sm-4 col-xs-12">
+																	<label>Clave</label>
+																	<input id="passwordupdate" type="text" class="form-control"  maxlength="10" name="passwordupdate"/>
+																</div>
+															</div>
+															<div class="row">
+																<div class ="col-md-12 col-sm-12 col-xs-12">
+																	<div class="row" id="divMensajeUpdate" style="display: none;padding-bottom: 20px;">
+																		<div class ="col-md-6 col-sm-6 col-xs-12">
+																			<div class="alert alert-info" role="alert" id="mensajeupdate">
+																			</div>
+																		</div>
+																	</div>
+																</div>
+																
+															</div>
+														</div>
+														<input type="hidden" name="id" id="id">
+													</div>
+													<div class="modal-footer">
+														<input id="btnActualizarUsuarios" type="button" class="btn btn-success" value="ACTUALIZAR">
+														<button id="btnCerrarUpdate" type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+													</div>
+												</div>
+										    </div>
+										  </div>
+										</div>
+							</div>
+						</div>
+					</div>
+                 </div>
+             </div>
+         </div>
+         <script th:src="@{/js/admin/usuarios/usuarios.js}"></script>
+	</div>
+</body>
+</html>

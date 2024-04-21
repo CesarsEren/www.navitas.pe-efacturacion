@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- ------------------------------------------------------------ -->
+    <link rel="stylesheet" type="text/css" th:href="@{/bootstrap/css/bootstrap.css}"/>
+    <link th:href="@{/bootstrap-dialog/css/bootstrap-dialog.css}" rel="stylesheet" type="text/css"/>
+    <link th:href="@{/font-awesome/font-awesome.min.css}" rel="stylesheet" type="text/css"/>
+    <link th:href="@{/font-awesome/all.css}" rel="stylesheet" type="text/css" />
+    <link th:href="@{/css/custom.min.css}" rel="stylesheet" type="text/css" />
+    <link th:href="@{/bootstrap-table/css/bootstrap-table.min.css}" rel="stylesheet" type="text/css"/>
+    <link th:href="@{/bootstrap-datepicker/css/bootstrap-datepicker3.min.css}" rel="stylesheet" type="text/css"/>
+    <!-- -------------------------------------------------------------->
+    <script th:src="@{/jquery/jquery.min.js}"></script>
+    <title layout:title-pattern="$LAYOUT_TITLE - $CONTENT_TITLE">Navitas</title>
+</head>
+<body class="nav-md">
+	<div class="container body">
+		<div class="main_container">
+			<div class="col-md-3 left_col">
+				<div class="left_col scroll-view">
+					 <div class="navbar nav_title" style="border: 0;">
+                    	<a href="#" class="site_title"><span>Navitas</span></a>
+	                 </div>
+	                <div class="clearfix"></div>
+	                <div sec:authorize="isAuthenticated()">
+	                	<div class="profile clearfix">
+						    <!-- <div class="profile_pic">-->
+						     <div class="profile_pic">
+						    	<img th:src="@{/images/logo.png}" width="200" height="90" alt="..."> 
+						    	<!-- class="img-circle profile_img">-->
+						    </div>
+						    <!--
+						    <div class="profile_info">
+					                <span>Bienvenido,</span>
+					                <h2>
+					                	<span sec:authentication="principal.razonSocial"></span>
+					                </h2>
+						    </div>-->
+						</div>
+							<th:block th:replace="fragments/menu :: menu"/>
+					</div>
+	            </div>
+			</div>
+			
+			<div class="top_nav">
+				    <div class="nav_menu">
+					   <nav>
+					     	<div class="nav toggle">
+					       	<a id="menu_toggle" style="color: #edff00;"><i class="fa fa-bars"></i></a>
+						    </div>
+						    <ul class="nav navbar-nav navbar-right">
+						    	<li>
+						    		<a class="user-profile dropdown-toggle">
+						    			Bienvenido : <span sec:authentication="principal.razonSocial" style="font-weight: bold;"></span>
+						    		</a>
+						    	</li>
+						    	
+						    </ul>
+						</nav>
+					</div>
+			</div>
+			<div class="right_col" role="main">
+				<th:block layout:fragment="content"/>	
+			</div>
+		    
+		    <th:block th:replace="fragments/footer :: footer"/>
+		</div>
+	</div>
+<script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
+<script th:src="@{/nprogress/nprogress.js}"></script>
+<script th:src="@{/bootstrap-table/js/bootstrap-table.min.js}"></script>
+<script th:src="@{/bootstrap-table/js/bootstrap-table-locale-all.js}"></script>
+<script th:src="@{/bootstrap-datepicker/js/bootstrap-datepicker.min.js}"></script>
+<script th:src="@{/bootstrap-datepicker/locales/bootstrap-datepicker.es.min.js}"></script>
+<script th:src="@{/bootstrap-dialog/js/bootstrap-dialog.js}"></script>
+<script th:src="@{/js/custom.min.js}"></script>
+</body>
+</html>

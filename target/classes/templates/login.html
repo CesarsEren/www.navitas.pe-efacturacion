@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" ></meta>
+    <meta charset="utf-8"></meta>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" ></meta>
+    <meta name="viewport" content="width=device-width, initial-scale=1" ></meta>
+	<title>Navitas</title>
+	<!--
+	<link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}"/>
+	-->
+	<link rel="stylesheet" type="text/css" th:href="@{/bootstrap/css/bootstrap.min.css}"/>
+    <link th:href="@{/font-awesome/font-awesome.min.css}" rel="stylesheet" type="text/css"/>
+    <link th:href="@{/css/custom.min.css}" rel="stylesheet" type="text/css"/>
+    
+  </head>
+
+  <body class="login">
+    <div>
+      <a class="hiddenanchor" id="signup"></a>
+      <a class="hiddenanchor" id="signin"></a>
+      
+      <div class="login_wrapper">
+        <div class="animate form login_form">
+          <section class="login_content">
+          	<p th:if="${loginError}" class="alert alert-danger">el usuario y/o contraseña son incorrectas</p>
+          	<p th:if="${loginSession}" class="alert alert-danger">Su session ha culminado, por favor vuelva a ingresar al sistema.</p>
+            <form action="login" method="post" autocomplete="off" accept-charset="UTF-8">
+              <h1>Acceso al sistema</h1>
+              <div>
+                <input type="text" class="form-control" name="username" placeholder="username" required="required" />
+              </div>
+              <div>
+                <input type="password" class="form-control" name="password" placeholder="password" required="required" />
+              </div>
+              <div style="padding-left:20%;">
+                <input class="btn btn-success submit" value="Entrar al sistema" type="submit" />
+              </div>
+
+              <div class="clearfix"></div>
+
+              <div class="separator">
+                <div class="clearfix"></div>
+                <br />
+
+                <div>
+                  <h1><i class="fa fa-paw"></i>Navitas</h1>
+                  <p>©2024 Todos los derechos reservados. NAVITAS SOLUTIONS</p>
+                </div>
+              </div>
+            </form>
+          </section>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

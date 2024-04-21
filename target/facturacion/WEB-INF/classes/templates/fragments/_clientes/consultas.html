@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<!-- ------------------------------------------------------------ -->
+<link rel="stylesheet" type="text/css"
+	th:href="@{/bootstrap/css/bootstrap.css}" />
+<link th:href="@{/font-awesome/font-awesome.min.css}" rel="stylesheet"
+	type="text/css" />
+<link th:href="@{/font-awesome/all.css}" rel="stylesheet"
+	type="text/css" />
+<link th:href="@{/css/custom.min.css}" rel="stylesheet" type="text/css" />
+<link th:href="@{/bootstrap-table/css/bootstrap-table.min.css}"
+	rel="stylesheet" type="text/css" />
+<link
+	th:href="@{/bootstrap-datepicker/css/bootstrap-datepicker3.min.css}"
+	rel="stylesheet" type="text/css" />
+<style>
+@media ( min-width : 1200px) .modal-xl {
+	max-width
+	:
+	 
+	1140
+	px
+	;
+	
+
+}
+
+@media ( min-width : 992px) .modal-xl {
+	max-width
+	:
+	 
+	800
+	px
+	;
+	
+
+}
+</style>
+<!-- -------------------------------------------------------------->
+<script th:src="@{/jquery/jquery.min.js}"></script>
+</head>
+<body class="nav-md">
+	<div class="container body">
+		<div class="main_container">
+			<div class="top_nav">
+				<div class="nav_menu">
+					<nav class="" role="navigation">
+						<div class="nav toggle">
+							<a id="menu_toggle" style="color: #edff00;"><i
+								class="fa fa-bars"></i></a>
+						</div>
+					</nav>
+				</div>
+			</div>
+			<div class="right_col" role="main">
+				<div class="">
+					<div class="page-title">
+						<div class="title_left">
+							<h2>CONSULTA DOCUMENTOS ELECTRÓNICOS</h2>
+						</div>
+					</div>
+
+					<div class="row">
+
+						<div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel" >
+                  <div class="x_content">
+                      <div class="row">
+							<div class="row">
+								<div class="col-md-3 col-sm-6 col-xs-12">
+									<label>Fecha</label>
+									 <div class="input-group input-append date" id="dateRangePickerDocumentos">
+										<input id="fechaDocumentos" type="text" class="form-control" name="fechaDocumentos" />
+										 <span class="input-group-addon add-on"><span class="glyphicon glyphicon-calendar"></span></span>
+									 </div>
+								</div>
+								<div class="col-md-3 col-sm-6 col-xs-12">
+									<label>Empresa</label>
+									<select class="form-control" id="empresa" name="empresa">
+										<option value="001">NAVITAS SOLUTIONS</option>
+									</select>
+								</div>
+								<div class="col-md-3 col-sm-6 col-xs-12" style="padding-top: 23px;">
+									<input id="btnConsultaDocumentos" type="button" class="btn btn-success" value="CONSULTAR DOCUMENTO">
+								</div>
+								 
+								
+							</div>
+							<div class="row" id="divConsulta" style="padding-bottom: 20px;">
+								<div class="col-md-3 col-sm-6 col-xs-12">
+									<label>Serie</label>
+									<input id="serie" type="text" data-toggle="tooltip" title="primer caracter 'B' boleta  &oacute 'F' factura" class="form-control" name="serie" placeholder="F000" maxlength="4" onblur="javascript:AumentarCerosSerie(this);" style="text-transform: uppercase;"  />
+								</div>
+								<div class="col-md-3 col-sm-6 col-xs-12">
+									<label>Numero</label>
+									<input id="numero" type="text" class="form-control" placeholder="0000000" maxlength="7" name="numero" onblur="javascript:AumentarCerosNumero(this);"  onkeypress= "return validarSoloNumerosEnteros(event);" />
+								</div>
+								<div class="col-md-3 col-sm-6 col-xs-12">
+									<label>Tipo Documento</label>
+									<select class="form-control" id="tipodocumento" name="tipodocumento">
+										<option value="01">FACTURA / ENCOMIENDA CARGA</option>
+										<option value="02">BOLETA VENTA / ENCOMIENDA CARGA</option>
+										<!-- <option value="03">FACTURA / PASAJES</option>
+										<option value="04">BOLETA VENTA / PASAJES</option>-->
+										<option value="05">NOTA CREDITO</option>
+										<option value="06">NOTA DEBITO</option>
+									</select>
+								</div>
+							</div>
+							<div class="row" style="padding-bottom: 20px;">
+								<div id="divFactura" style="display:block;">
+									<div class="col-md-3 col-sm-6 col-xs-12">
+										<label>Ruc</label>
+										<input id="ruc" type="text" class="form-control" name="ruc" maxlength="11" onblur="javascript:RucExistente(this);"/>
+									</div>
+									<div class="col-md-3 col-sm-6 col-xs-12">
+										<label>Razon</label>
+										<input id="razon" type="text" class="form-control" name="razon" disabled="disabled"/>
+									</div>
+								</div>
+								<div class="col-md-3 col-sm-6 col-xs-12">
+									<label>Monto</label>
+									<input id="monto" type="text" class="form-control" value="0.00" name="monto" onkeypress= "return validarNumerosReales(event);"/>
+								</div>
+							</div>
+							<div class="row" id="divMensaje" style="display: none;">
+								<div class ="col-md-6 col-sm-6 col-xs-12">
+									<div class="alert alert-info" role="alert" id="mensaje">
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-xs-12">
+									<table  class="table table-condensed table-sm"
+										   	data-toggle="table"
+										   	data-locale="es-ES"
+										   	data-height="350"
+										  	data-unique-id="id"
+										   	data-side-pagination="server"
+										   	data-response-handler="responseHandlerDocumentos"
+							  			  	data-query-params="queryParams"
+											   id="tblDocumentosElectronicos">
+				                      		<thead>
+				                      			<tr>
+				                      			  <th data-field="id" data-visible="false">Nro</th>
+				                      			  <th data-field="descarga" data-visible="false">Descarga</th>
+				                  				  <th data-field="fechaEmision">Fecha Emision</th>
+				                  				  <th data-field="documentoElectronico">Documento</th>
+				                           		  <th data-field="agencia">Agencia</th>
+				                           		  <th data-field="servicio" data-visible="false">Servicio</th>
+				                           		  <th data-field="enviar" data-visible="false">Enviar</th>
+				                           		  <th data-field="observaciones" data-formatter="FormatterDescargar">Descargar</th>
+				                           		</tr>
+				                      		</thead>
+				                 </table>
+					            </div>
+							</div>
+					</div>
+				</div>
+                </div>
+                
+                <!--  <a  class="btn btn-danger"  href="https://www.escondatagate.net/receiver/page/c/U2FsdGVkX1/OXdPXNjWQPVa6+1u66OkQoUgjrW0+WbsD7aoc47TUXrSYGXbAB9G29ePlfdnZ+chj7u+bgzoMV3WLX1xssoWGxqTJRnkfcwE="> Documentos Después de 29/06/2019 EXPRESO INTERNACIONAL PALOMINO</a>
+				<a class="btn btn-danger"  href="https://www.escondatagate.net/receiver/page/c/U2FsdGVkX1/FeOynMYdYd8Zz+VpsDROA6WaXij1cvalFE1g0Tkw5VJP3q3YkxoWDoRQRovs/wB+FRzM9H7L5wXrWUKd8DDH0ftJfQ8IJkzE="> Documentos Después de 29/06/2019 TRANSPORTES WARI</a>
+				<a class="btn btn-danger" href="https://www.escondatagate.net/receiver/page/c/U2FsdGVkX1+fWAveScrQvU0JmXjaepoi42RLaigitdNzpNbFqAPUVYtU/WPK98QXJv37NWNegdZmpiV4lv/afB/W7/uDd48TN6sTwi1iQ3w="> Documentos Después de 29/06/2019 WARI CARGO</a>
+				
+                <div class="row">
+					<jsp:include page="../template/footer-visa.jsp"></jsp:include>	
+				</div>
+				-->
+              </div>
+            	</div>
+				</div>
+			</div>
+		</div>
+		<div class="modal fade" id="modalinfo" data-backdrop="static"
+			data-keyboard="false" tabindex="-1" role="dialog"
+			aria-labelledby="staticBackdropLabel" aria-hidden="true">
+			<div class="modal-dialog" style="width: 80%; height: 80%;">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="staticBackdropLabel">Información</h5>
+						<button type="button" class="close" data-dismiss="modal"
+							aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<img width="100%" height="100%" src="../images/infoconsulta.jpeg"
+							alt="Información" />
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
+	<script th:src="@{/nprogress/nprogress.js}"></script>
+	<script th:src="@{/bootstrap-table/js/bootstrap-table.min.js}"></script>
+	<script th:src="@{/bootstrap-table/js/bootstrap-table-locale-all.js}"></script>
+	<script
+		th:src="@{/bootstrap-datepicker/js/bootstrap-datepicker.min.js}"></script>
+	<script
+		th:src="@{/bootstrap-datepicker/locales/bootstrap-datepicker.es.min.js}"></script>
+	<script th:src="@{/bootstrap-dialog/js/bootstrap-dialog.js}"></script>
+	<!--<script th:src="@{/js/custom.min.js}"></script>-->
+	<script th:src="@{/js/_clientes/consultas.js}"></script>
+</body>
+</html>

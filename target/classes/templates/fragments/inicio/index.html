@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{fragments/layout}">
+<head>
+    <title>Navitas</title>
+</head>
+<body>
+<div layout:fragment="content" th:remove="tag">
+
+		<div class="row">
+			<div class="col-md-12 col-sm-12 col-xs-12">
+				<div class="page-title">
+		            	<h2>SEGUIMIENTO DE ENCOMIENDA/CARGA</h2>
+		        </div>
+			</div>
+		</div>
+
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                    
+                    <div class="x_content">
+                    	<!-- AQUI COMIENZA EL FORMULARIO -->	
+                    	<div class="row">
+						   <div class="col-md-12 col-sm-12 col-xs-12">
+				                <div class="x_panel" >
+				                  <div class="x_content">
+				                      <div class="row">
+				                      		<h2><span class="label label-danger">Busqueda General</span></h2>
+											<div class="row">
+				                      			<div class="col-md-6 col-sm-6 col-xs-12">
+													<label>Consignado</label>
+													<input id="nombres" type="text" class="form-control" name="nombres"  maxlength="50" style="text-transform: uppercase;"/>
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-md-3 col-sm-4 col-xs-12">
+													<label>Desde</label>
+													 <div class="input-group input-append date" id="dateRangePickerDesde">
+														<input id="fechaDesde" type="text" class="form-control" name="fechaDesde" />
+														 <span class="input-group-addon add-on"><span class="glyphicon glyphicon-calendar"></span></span>
+													 </div>
+												</div>
+												<div class="col-md-3 col-sm-4 col-xs-12">
+													<label>Hasta</label>
+													 <div class="input-group input-append date" id="dateRangePickerHasta">
+														<input id="fechaHasta" type="text" class="form-control" name="fechaHasta" />
+														 <span class="input-group-addon add-on"><span class="glyphicon glyphicon-calendar"></span></span>
+													 </div>
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-md-3 col-sm-4 col-xs-12">
+													<label>Tipo</label>
+													<select class="form-control" id="tipo" name="tipo">
+														<option value="0">TODOS</option>
+														<option value="1">PENDIENTES</option>
+														<option value="2">ENTREGADOS</option>
+														<option value="3">DEVUELTOS</option>
+													</select>
+												</div>
+												<div class="col-md-3 col-sm-4 col-xs-12">
+													<label>DT (Documento de Transporte)</label>
+													<input id="dt" type="text" class="form-control" maxlength="7" name="dt"/>
+												</div>
+											</div>
+										</div>
+									</div>
+				                </div>
+				                <div class="x_panel">
+				                	<div class="x_content">
+				                		<div class="row">
+				                				<h2><span class="label label-danger">Busqueda por Documento</span></h2>
+				                				<div class="row">
+				                					<div class="col-md-3 col-sm-4 col-xs-12">
+															<label>Numero de documento del Remitente</label>
+															<select class="form-control" id="tipoDocumento" name="tipoDocumento">
+																<option value="">---SELECCIONE---</option>
+																<option value="01">FACTURA</option>
+																<option value="02">BOLETA VENTA</option>
+																<option value="03">GUIA</option>
+															</select>
+													</div>
+													<div class="col-md-3 col-sm-4 col-xs-12">
+														<label>Serie</label>
+														<input id="serieRemitente" type="text"  class="form-control" name="serieRemitente" placeholder="000" maxlength="3" onblur="javascript:AumentarCerosSerie(this);" style="text-transform: uppercase;"/>
+													</div>
+													<div class="col-md-3 col-sm-4 col-xs-12">
+														<label>Numero</label>
+														<input id="numeroRemitente" type="text" class="form-control" placeholder="0000000" maxlength="7" name="numeroRemitente" onblur="javascript:AumentarCerosNumero(this);"/>
+													</div>
+				                				</div>
+				                				<div class="row">
+				                					<div class="col-md-3 col-sm-4 col-xs-12">
+														<label>Numero de Guia de Navitas</label>
+														<input id="seriePalomino" type="text"  class="form-control" name="seriePalomino" placeholder="000" maxlength="3" onblur="javascript:AumentarCerosSerie(this);" style="text-transform: uppercase;"/>
+													</div>
+													<div class="col-md-3 col-sm-4 col-xs-12">
+														<label>Numero</label>
+														<input id="numeroPalomino" type="text" class="form-control" name="numeroPalomino" placeholder="0000000" maxlength="7" onblur="javascript:AumentarCerosNumero(this);"/>
+													</div>
+				                				</div>
+				                			</div>
+											<div class="row" id="divMensaje" style="display: none;padding-top: 20px;">
+													<div class="alert alert-info col-md-6 col-sm-12 col-xs-12" role="alert" id="mensaje">
+													</div>
+											</div>
+									</div>
+				                </div>
+				                <div class="row">
+				                	<div class="form-inline col-md-12 col-sm-12 col-xs-12">
+				                		<div class="form-group">
+				                			<div>
+				                				<input id="btnConsultaDocumentos" type="button" class="btn btn-success" value="CONSULTAR">
+				                			</div>
+					                	</div>
+										<div class="form-group">
+											<div id="divExcel">
+												<input id="btnExcel" type="button" class="btn btn-success" value="IMPRIMIR EXCEL" disabled="disabled">
+											</div>
+										</div>
+				                	</div>
+				                </div>
+				                <div class="row">
+										<div class="col-md-12 col-sm-12 col-xs-12">
+												<table  class="table table-condensed table-sm"
+													   	data-toggle="table"
+													   	data-locale="es-ES"
+													  	data-pagination="true"
+													   	data-height="350"
+													  	data-unique-id="id"
+													   	data-side-pagination="server"
+													   	data-response-handler="responseHandler"
+										  			  	data-query-params="queryParams"
+										  			  	id="tblDocumentos">
+						                      		<thead>
+						                      			<tr>
+						                      			  <th data-field="id" data-visible="false">Nro</th>
+						                      			  <th data-field="documento">Documento</th>
+						                      			  <th data-field="serieGuia">SerieGuia</th>
+						                      			  <th data-field="numeroGuia">NumeroGuia</th>
+						                      			  <th data-field="remitente">Remitente</th>
+						                      			  <th data-field="consignado">Consignado</th>
+						                      			  <th data-field="fechaEmision">Fecha</th>
+						                      			  <th data-field="fechaEntrega">Fecha Entrega</th>
+						                      			  <th data-field="bultos">Bultos</th>
+						                      			  <th data-field="kilos">Kilos</th>
+						                      			  <th data-field="anulado">Anulado</th>
+						                      			  <th data-field="estado">Estado</th>
+						                      			  <th data-field="origen">Origen</th>
+						                      			  <th data-field="destino">Destino</th>
+						                      			  <th data-field="empresa">Empresa</th>
+						                  				  <th data-field="serie">Serie</th>
+						                           		  <th data-field="numero">Numero</th>
+						                           		  <th data-field="flete">Flete</th>
+						                           		  <th data-field="observaciones" data-formatter="Formatter" data-events="operateEvents">Detalles</th>
+						                           		</tr>
+						                      		</thead>
+						                 		</table>
+							            </div>
+								</div>
+				              </div>
+				        </div>
+				    </div>
+                </div>
+            </div>
+            <div id="modalPagina"></div>
+        </div>
+    <script th:src="@{/js/consultas/consultasdocumentos.js}"></script>
+</div>
+</body>
+</html>
